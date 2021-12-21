@@ -102,7 +102,7 @@ begin
 		income := v_emp.sal;
 		if income > income_base then
 			insert into get_tax values(
-                v_emp.name,tax_rate*(income-base_point),sysdate);
+                v_emp.name,tax_rate*(income-income_base),sysdate);
         else
         	insert into get_tax values(
                 v_emp.name,0,sysdate);
