@@ -82,7 +82,7 @@
 | 14                                                        | 以管理员身份登陆系统，将SCOTT用户下的所得税表GET_TAX的查询权限授予给CCEC用户 |
 |                                                           | `sqlplus / as sysdba`<br />`grant select on get_tax to scott` |
 | 15                                                        | 取消CCEC用户在工资历史表SAL_HIST上的数据增、删、改的操作权限 |
-|                                                           | `revoke insert,updat,delete tablespace on sal_hist from ccec` |
+|                                                           | `revoke insert,updat,delete on sal_hist from ccec` |
 
 ## 五、编写对应的PL/SQL语句
 
