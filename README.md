@@ -119,7 +119,7 @@ end;
 
 
 
-####2、在职工表上创建一个触发器salary_rec，用来自动记录工资变更信息，表更前后的工资信息记入“工资历史表”
+#### 2、在职工表上创建一个触发器salary_rec，用来自动记录工资变更信息，表更前后的工资信息记入“工资历史表”
 
 ```sql
 CREATE OR REPLACE TRIGGER SALART_REA
