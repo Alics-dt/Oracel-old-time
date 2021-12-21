@@ -1,9 +1,10 @@
 声明：仅学习过程使用，其他一切用途与作者无关
+
 ## 一、名词解释
 
 #### 1.关系数据模型（Relational Model）
 
-关系数据模型用于存储数据的逻辑结构是关系，可以把关系看作由行和列构成的集合，行为记录，列为字段。
+关系模型是一种逻辑结构模型，用于表示数据在计算机系统中存储时所采用的逻辑结构和特征。
 
 #### 2.实例（Instance）
 
@@ -39,8 +40,8 @@
 | 1                                                         | Server process（处理用户连接提出的各种要求）                 |
 | 2                                                         | Database buffer cache（存放从数据文件读取的数据，多次访问的数据保留于此，下次访问不必从磁盘中重新读取） |
 | 3                                                         | Redo log buffer（由内存到内存写的速度快，先将Redo log存在缓存中） |
-| 4                                                         | Shared pool（存储多种程序数据）              |
-| 5                                                         | DMON（释放异常关闭所占用的内存、锁等资源；检查调度器和服务器进程是否异常关闭） |
+| 4                                                         | Shared pool（存储多种程序数据）                              |
+| 5                                                         | PMON（释放异常关闭所占用的内存、锁等资源；检查调度器和服务器进程是否异常关闭） |
 | 6                                                         | SMON（程序发生故障重启时，执行实例恢复）                     |
 | 7                                                         | DBWR（把数据缓存区内修改过的数据写入磁盘上的数据文件）       |
 | 8                                                         | Data files（存放数据）                                       |
@@ -60,29 +61,29 @@
 | 3                                                         | 在职工表EMPLOYEE上定义主键约束PK_EMPLOYEE                    |
 |                                                           | `alter table employee add constraint pk_c primary key(code)` |
 | 4                                                         | 在职工表的所属部门字段E_DEPT上定义如图所示的外键约束FK_EMP_DEPT |
-|                                                           | `alter table employee add constraint fk_e foreign key(dept) references department(code)` |
+|                                                           | `alter table employee add constraint fk_emp_dept foreign key(dept) references department(code)` |
 | 5                                                         | 在职工表的所属部门字段E_DEPT上创建一个B_Tree索引IDX_EMP_DEPT，并将其存储于表空间PERFORMANCE |
 |                                                           | `create index idx_emp_dept on department(dept)`<br />`tablespace performance` |
 | 6                                                         | 查询每个部门的职工工资总额、职工人数和职工平均工资           |
 |                                                           | `select count(sal) as 工资总额，count(name) as 职工人数，avg(sal) as 平均工资 from employee` |
 | 7                                                         | 在职工表中删除隶属于部门“信息中心”的所有职工                 |
-|                                                           | `delete from department where d_name = 信息中心`             |
+|                                                           | `delete from employee where d_name = '信息中心'`             |
 | 8                                                         | 将工资低于5000的职工工资提高百分之十五                       |
-|                                                           | `alter employee set sal = sal*1.5 where e_sal < 5000`        |
+|                                                           | `update employee set sal = sal*1.15 where e_sal < 5000`      |
 | 9                                                         | 将步骤5、6、7、8的DML操作结果永久保存                        |
 |                                                           | `commit`                                                     |
 | 10                                                        | 以“工号、职工姓名、部门名称”的形式查询出所有职工信息         |
 |                                                           | `select e.code as 工号，e.name as 职工姓名，e.dept as 部门名称 from employee  e` |
 | 11                                                        | 查询工资低于单位平均工资的所有员工                           |
-|                                                           | `select * from employee e where sal<(select avg(sal))`       |
+|                                                           | `select * from employee where sal<(select avg(sal) from employee)` |
 | 12                                                        | 查询那些工资高于所在部门平均工资的所有职工                   |
 |                                                           | `select * from employee e where sal>(select avg(sal) from employee where e.dept = dept)` |
 | 13                                                        | 快速清空工资历史表SAL_HIST中的所有记录                       |
 |                                                           | `truncate table sal_hist`                                    |
 | 14                                                        | 以管理员身份登陆系统，将SCOTT用户下的所得税表GET_TAX的查询权限授予给CCEC用户 |
-|                                                           | `sqlplus / as sysdba`<br />`grant select on get_tax to scott` |
+|                                                           | `sqlplus / as sysdba`<br />`grant select on get_tax to ccec` |
 | 15                                                        | 取消CCEC用户在工资历史表SAL_HIST上的数据增、删、改的操作权限 |
-|                                                           | `revoke insert,updat,delete on sal_hist from ccec` |
+|                                                           | `revoke insert,updat,delete on sal_hist from ccec`           |
 
 ## 五、编写对应的PL/SQL语句
 
